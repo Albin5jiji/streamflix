@@ -11,6 +11,12 @@ export interface OTTContent {
   _id: string;
   _createdDate?: Date;
   _updatedDate?: Date;
+  /** @wixFieldType boolean */
+  isTopGrossing?: boolean;
+  /** @wixFieldType number */
+  rottenTomatoesRating?: number;
+  /** @wixFieldType number */
+  imdbRating?: number;
   /** @wixFieldType text */
   title?: string;
   /** @wixFieldType text */

@@ -118,6 +118,32 @@ export default function ContentDetailPage() {
                     </div>
                   </div>
 
+                  {/* Ratings Section */}
+                  <div className="flex gap-6 py-4">
+                    {content.imdbRating && (
+                      <div className="flex items-center gap-3">
+                        <div className="bg-yellow-500 text-black w-12 h-12 rounded-full flex items-center justify-center font-bold">
+                          ⭐
+                        </div>
+                        <div>
+                          <span className="font-heading text-sm uppercase text-gray-400 block">IMDb Rating</span>
+                          <span className="font-heading text-2xl text-white">{content.imdbRating.toFixed(1)}/10</span>
+                        </div>
+                      </div>
+                    )}
+                    {content.rottenTomatoesRating && (
+                      <div className="flex items-center gap-3">
+                        <div className="bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold">
+                          🍅
+                        </div>
+                        <div>
+                          <span className="font-heading text-sm uppercase text-gray-400 block">Rotten Tomatoes</span>
+                          <span className="font-heading text-2xl text-white">{content.rottenTomatoesRating}%</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   {content.description && (
                     <div>
                       <h2 className="font-heading text-xl uppercase text-white mb-3">
@@ -197,6 +223,26 @@ export default function ContentDetailPage() {
                       </span>
                       <span className="font-paragraph text-base text-white">
                         {content.streamingPlatform}
+                      </span>
+                    </div>
+                  )}
+                  {content.imdbRating && (
+                    <div>
+                      <span className="font-heading text-sm uppercase text-gray-400 block mb-2">
+                        IMDB RATING
+                      </span>
+                      <span className="font-paragraph text-base text-yellow-500 font-bold">
+                        {content.imdbRating.toFixed(1)}/10
+                      </span>
+                    </div>
+                  )}
+                  {content.rottenTomatoesRating && (
+                    <div>
+                      <span className="font-heading text-sm uppercase text-gray-400 block mb-2">
+                        ROTTEN TOMATOES
+                      </span>
+                      <span className="font-paragraph text-base text-red-500 font-bold">
+                        {content.rottenTomatoesRating}%
                       </span>
                     </div>
                   )}

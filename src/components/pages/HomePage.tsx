@@ -1,10 +1,12 @@
 // HPI 1.7-V
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
-import { Play, Search, Tv, ArrowRight, CheckCircle2, Globe, Zap, Layers, CreditCard } from 'lucide-react';
+import { Play, Search, Tv, ArrowRight, CheckCircle2, Globe, Zap, Layers, CreditCard, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Image } from '@/components/ui/image';
+import { BaseCrudService } from '@/integrations';
+import { OTTContent } from '@/entities';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -14,6 +16,33 @@ export default function HomePage() {
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  const [topGrossingContent, setTopGrossingContent] = useState<OTTContent[]>([]);
+  const [isLoadingContent, setIsLoadingContent] = useState(true);
+
+  useEffect(() => {
+    loadTopGrossingContent();
+  }, []);
+
+  const loadTopGrossingContent = async () => {
+    try {
+      setIsLoadingContent(true);
+      const result = await BaseCrudService.getAll<OTTContent>('ottcontent', [], { limit: 100 });
+      const topGrossing = result.items
+        .filter((item: OTTContent) => item.isTopGrossing)
+        .sort((a: OTTContent, b: OTTContent) => {
+          const aRating = (a.imdbRating || 0) + (a.rottenTomatoesRating || 0) / 100;
+          const bRating = (b.imdbRating || 0) + (b.rottenTomatoesRating || 0) / 100;
+          return bRating - aRating;
+        })
+        .slice(0, 12);
+      setTopGrossingContent(topGrossing);
+    } catch (error) {
+      console.error('Failed to load top-grossing content:', error);
+    } finally {
+      setIsLoadingContent(false);
+    }
+  };
 
   // Parallax transforms for Hero
   const heroTextY = useTransform(scrollYProgress, [0, 0.2], [0, 100]);
@@ -148,6 +177,118 @@ export default function HomePage() {
             ))}
           </motion.div>
         </div>
+      </section>
+
+
+      {/* ---------------------------------------------------------------------------
+         TOP GROSSING CONTENT SECTION
+         Layout: Grid of top-grossing movies/shows with ratings
+      --------------------------------------------------------------------------- */}
+      <section className="relative w-full max-w-[120rem] mx-auto px-4 md:px-8 py-32">
+        <div className="space-y-12">
+          <div className="w-12 h-1 bg-primary mb-8" />
+          <h2 className="font-heading text-5xl md:text-7xl uppercase leading-none">
+            Top <span className="text-primary">Grossing</span><br />
+            Content
+          </h2>
+          <p className="font-paragraph text-xl text-gray-400 max-w-2xl">
+            Discover the most-watched and highest-rated movies and shows across all streaming platforms.
+          </p>
+        </div>
+
+        {/* Content Grid */}
+        {isLoadingContent ? (
+          <div className="flex items-center justify-center py-24">
+            <div className="text-center">
+              <div className="inline-block animate-spin">
+                <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full" />
+              </div>
+            </div>
+          </div>
+        ) : topGrossingContent.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+            {topGrossingContent.map((item, index) => (
+              <motion.div
+                key={item._id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+              >
+                <Link to={`/content/${item._id}`}>
+                  <div className="group cursor-pointer">
+                    <div className="relative aspect-[2/3] overflow-hidden bg-black border border-primary/20 mb-4 rounded-lg">
+                      {item.posterImage && (
+                        <Image
+                          src={item.posterImage}
+                          alt={item.title || 'Content poster'}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          width={300}
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Ratings Overlay */}
+                      <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {item.imdbRating && (
+                          <div className="bg-yellow-500 text-black px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
+                            <Star className="w-3 h-3 fill-current" />
+                            {item.imdbRating.toFixed(1)}
+                          </div>
+                        )}
+                        {item.rottenTomatoesRating && (
+                          <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
+                            {item.rottenTomatoesRating}%
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <h3 className="font-heading text-sm uppercase text-white group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-xs">
+                      {item.contentType && (
+                        <span className="font-paragraph text-gray-400">{item.contentType}</span>
+                      )}
+                      {item.streamingPlatform && (
+                        <>
+                          <span className="text-primary">•</span>
+                          <span className="font-paragraph text-primary">{item.streamingPlatform}</span>
+                        </>
+                      )}
+                    </div>
+                    
+                    {/* Ratings Display Below */}
+                    <div className="flex gap-3 mt-3 text-xs">
+                      {item.imdbRating && (
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 fill-yellow-500 text-yellow-500" />
+                          <span className="text-gray-300">{item.imdbRating.toFixed(1)}</span>
+                        </div>
+                      )}
+                      {item.rottenTomatoesRating && (
+                        <div className="flex items-center gap-1">
+                          <span className="text-red-500 font-bold">🍅</span>
+                          <span className="text-gray-300">{item.rottenTomatoesRating}%</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-24">
+            <div className="text-center">
+              <h3 className="font-heading text-3xl uppercase text-primary mb-4">
+                NO TOP GROSSING CONTENT YET
+              </h3>
+              <p className="font-paragraph text-gray-400">
+                Check back soon for the latest top-grossing movies and shows
+              </p>
+            </div>
+          </div>
+        )}
       </section>
 
 

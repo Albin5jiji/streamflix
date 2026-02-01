@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, Filter, X, Star } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { OTTContent } from '@/entities';
 import { Input } from '@/components/ui/input';
@@ -232,6 +232,21 @@ export default function BrowsePage() {
                         />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Ratings Overlay */}
+                      <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {item.imdbRating && (
+                          <div className="bg-yellow-500 text-black px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
+                            <Star className="w-3 h-3 fill-current" />
+                            {item.imdbRating.toFixed(1)}
+                          </div>
+                        )}
+                        {item.rottenTomatoesRating && (
+                          <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
+                            {item.rottenTomatoesRating}%
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <h3 className="font-heading text-sm uppercase text-white group-hover:text-primary transition-colors line-clamp-2 mb-1">
                       {item.title}
@@ -245,6 +260,22 @@ export default function BrowsePage() {
                           <span className="text-primary">•</span>
                           <span className="font-paragraph text-primary">{item.streamingPlatform}</span>
                         </>
+                      )}
+                    </div>
+                    
+                    {/* Ratings Display Below */}
+                    <div className="flex gap-3 mt-3 text-xs">
+                      {item.imdbRating && (
+                        <div className="flex items-center gap-1">
+                          <Star className="w-3 h-3 fill-yellow-500 text-yellow-500" />
+                          <span className="text-gray-300">{item.imdbRating.toFixed(1)}</span>
+                        </div>
+                      )}
+                      {item.rottenTomatoesRating && (
+                        <div className="flex items-center gap-1">
+                          <span className="text-red-500 font-bold">🍅</span>
+                          <span className="text-gray-300">{item.rottenTomatoesRating}%</span>
+                        </div>
                       )}
                     </div>
                   </motion.div>
