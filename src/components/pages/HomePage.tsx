@@ -44,7 +44,6 @@ export default function HomePage() {
   return (
     <div ref={containerRef} className="min-h-screen bg-background text-white overflow-clip selection:bg-primary selection:text-primary-foreground font-paragraph">
       <Header />
-
       {/* ---------------------------------------------------------------------------
          HERO SECTION - Minimalistic
          Structure: Clean, centered, essential content only.
@@ -88,11 +87,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
-
-
-
-
       {/* ---------------------------------------------------------------------------
          TOP GROSSING CONTENT SECTION - Minimalistic Grid
          Layout: Simple grid of top-grossing movies/shows
@@ -158,8 +152,6 @@ export default function HomePage() {
           </div>
         )}
       </section>
-
-
       {/* ---------------------------------------------------------------------------
          FEATURES SECTION - Minimalistic
          Layout: Simple list of features
@@ -197,11 +189,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-
-
-
-
       {/* ---------------------------------------------------------------------------
          SUBSCRIPTION MANAGER SECTION - Minimalistic
          Layout: Simple text and CTA
@@ -215,14 +202,12 @@ export default function HomePage() {
             Track your spending, renewal dates, and active plans. Never pay for a forgotten subscription again.
           </p>
           <Link to="/subscriptions">
-            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-heading text-lg px-10 py-6 rounded-lg">
+            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-heading text-lg px-10 py-6 rounded-lg gap-1 justify-center m-[5px]">
               MANAGE SUBSCRIPTIONS
             </Button>
           </Link>
         </div>
       </section>
-
-
       {/* ---------------------------------------------------------------------------
          FINAL CTA SECTION - Minimalistic
          Layout: Centered, simple
@@ -242,7 +227,6 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-
       <Footer />
     </div>
   );
