@@ -186,7 +186,7 @@ export default function HomePage() {
               title="Unified Search"
               description="One search bar for the entire streaming universe. Find any movie or show instantly, no matter where it lives."
               icon={Search}
-              imageSrc="https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.png?id=1"
+              imageSrc="https://static.wixstatic.com/media/ced712_e0d896549ea4411eab6cdbaeda064f33~mv2.png?originWidth=640&originHeight=448"
               color="primary"
             />
 
@@ -196,7 +196,7 @@ export default function HomePage() {
               title="Smart Filtering"
               description="Filter by genre, rating, year, and language across all platforms simultaneously. Your perfect watchlist, curated automatically."
               icon={Layers}
-              imageSrc="https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.png?id=2"
+              imageSrc="https://static.wixstatic.com/media/ced712_3d99b6e61a1542b3945433073722a488~mv2.png?originWidth=640&originHeight=448"
               color="secondary"
             />
 
@@ -206,7 +206,7 @@ export default function HomePage() {
               title="Sub Manager"
               description="Track your spending, renewal dates, and active plans. Never pay for a forgotten subscription again."
               icon={CreditCard}
-              imageSrc="https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.png?id=3"
+              imageSrc="https://static.wixstatic.com/media/ced712_92fd2336523d408f898ff4257283c96a~mv2.png?originWidth=640&originHeight=448"
               color="primary"
             />
 
@@ -222,7 +222,7 @@ export default function HomePage() {
       <section className="relative w-full h-[80vh] overflow-clip flex items-center justify-center">
         <div className="absolute inset-0 z-0">
            <Image 
-             src="https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.png?id=4" 
+             src="https://static.wixstatic.com/media/ced712_567db82f8abd413196ea1ecd0e4c55db~mv2.png?originWidth=1920&originHeight=1280" 
              alt="Cinematic Experience" 
              className="w-full h-full object-cover opacity-40 grayscale hover:grayscale-0 transition-all duration-1000 scale-105"
            />
