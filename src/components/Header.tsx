@@ -15,13 +15,13 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-primary/20">
-      <div className="w-full max-w-[100rem] mx-auto px-8 py-4">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
+      <div className="w-full max-w-[100rem] mx-auto px-4 md:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <span className="font-heading text-2xl md:text-3xl uppercase text-primary tracking-wider">
-              STREAMHUB
+            <span className="font-heading text-2xl uppercase text-primary tracking-tight">
+              StreamHub
             </span>
           </Link>
 
@@ -45,7 +45,7 @@ export default function Header() {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="bg-background border-primary/20">
+            <SheetContent side="right" className="bg-background border-white/10">
               <nav className="flex flex-col gap-6 mt-8">
                 {navLinks.map((link) => (
                   <Link
